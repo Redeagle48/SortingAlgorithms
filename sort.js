@@ -1,43 +1,61 @@
-var initArray = [3, 2, 9, 9, 9, 8, 104, 63];
+exports.sort = function(list) {
+    return sort(list);
+};
 
-for(var i = 0; i < initArray.length; i++){
+function sort(initArray){
 
-    console.log("i: " + i);
-    console.log("value: " + initArray[i]);
-
-    console.log("Array: " + initArray);
-
-    if(i === 0){}
-    else{
-
-        var elem = initArray[i];
-
-        for(var j = i-1; j >= 0; j--){
-
-            console.log("j: " + j);
-            console.log("j value: " + initArray[j]);
-
-            var b = false;
-            if(elem <= initArray[j] && (j-1 >= 0? elem >= initArray[j-1] : true)){
-
-                console.log(elem + " >= " + initArray[j]);
-
-                initArray = moveArrayElem(initArray,i,j);
-                console.log("After change: " + initArray);
-
-                b = true;
-            }
-            if(b) {break;}
-        }
+    if(!Array.isArray(initArray)) {
+        throw new NotAnArrayException("Not")
     }
 
-    console.log("\n")
+    for(var i = 0; i < initArray.length; i++){
+
+        if(i === 0){
+            //Nothing to be done
+        }
+        else{
+
+            var elem = initArray[i];
+
+            //Iterating the ordered elements (elements on the left)
+            for(var j = i-1; j >= 0; j--){
+
+                var b = false;
+                if(elem <= initArray[j] && (j-1 >= 0? elem >= initArray[j-1] : true)){
+
+                    //console.log("Before: " + initArray);
+                    moveArrayElem(initArray,elem,j,i+1);
+                    //console.log("After: " + initArray);
+
+                    b = true;
+                }
+                // Optimization: there is no need to iterate the ordered array when the value is greater than all the
+                //ordered elements
+                else if(elem > initArray[j] && i !== 1){
+                    b = true;
+                }
+
+                if(b) {break;}
+            }
+        }
+
+    }
+
+    return initArray;
+}
+
+function moveArrayElem(arrayToChange, elem, newPosition,index) {
+
+    // Array.prototype.splice -> arguments: start position, number of elements to delete, elements to add
+
+    //Add item to the final position
+    arrayToChange.splice(newPosition,0,elem);
+    //Remove item from the initial position
+    arrayToChange.splice(index,1);
 
 }
 
-console.log("Final array: " + initArray)
-
-function moveArrayElem(arrayToChange, oldPosition, newPosition) {
+function exchangeArrayElem(arrayToChange, oldPosition, newPosition) {
 
     if (oldPosition >= 0 && newPosition <= arrayToChange.length - 1) {
         var temp = arrayToChange[newPosition];
@@ -48,4 +66,10 @@ function moveArrayElem(arrayToChange, oldPosition, newPosition) {
     } else {
         console.log("You are not inside the limits!")
     }
+}
+
+// Exceptions
+function NotAnArrayException(message) {
+    this.message = message;
+    this.name = "NotAnArrayException";
 }
