@@ -93,7 +93,7 @@ describe("Test Suite 4", function() {
 function randomArray(arraySize) {
     var randomArray = [];
 
-    for(var i = 0; i < 10; i++) {
+    for(var i = 0; i < arraySize; i++) {
         randomArray.push(Math.round(1000*Math.random()));
     }
 
