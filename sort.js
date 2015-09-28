@@ -2,10 +2,25 @@ exports.sort = function(list) {
     return sort(list);
 };
 
+exports.notAnArrayException = function(message) {
+    return new NotAnArrayException(message);
+}
+
+exports.NotANumberException = function(message) {
+    return new NotANumberException(message);
+}
+
 function sort(initArray){
 
     if(!Array.isArray(initArray)) {
-        throw new NotAnArrayException("Not")
+        throw new NotAnArrayException("Argument is not an array");
+    }
+    else if(initArray.every(
+            function(elem, index, array) {
+                typeof elem !== "number";
+            }))
+    {
+        throw new NotANumberException("Array elem " + elem + " is not a number");
     }
 
     for(var i = 0; i < initArray.length; i++){
@@ -72,4 +87,9 @@ function exchangeArrayElem(arrayToChange, oldPosition, newPosition) {
 function NotAnArrayException(message) {
     this.message = message;
     this.name = "NotAnArrayException";
+}
+
+function NotANumberException(message) {
+    this.message = message;
+    this.name = "NotANumberException";
 }
