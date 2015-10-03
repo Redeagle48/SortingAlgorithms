@@ -60,6 +60,16 @@ describe("Test Suite 3", function () {
 
 describe("Test Suite 4", function () {
 
+    function randomArray(arraySize) {
+        var randomArray = [];
+
+        for (var i = 0; i < arraySize; i++) {
+            randomArray.push(Math.round(1000 * Math.random()));
+        }
+
+        return randomArray;
+    }
+
     it("Sort 3-elem Random Array", function () {
 
         var testArray = randomArray(3);
@@ -106,14 +116,3 @@ describe("Test Suite 4", function () {
     });
 
 });
-
-
-function randomArray(arraySize) {
-    var randomArray = [];
-
-    for (var i = 0; i < arraySize; i++) {
-        randomArray.push(Math.round(1000 * Math.random()));
-    }
-
-    return randomArray;
-}
